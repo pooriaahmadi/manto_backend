@@ -167,7 +167,7 @@ class User {
     return {
       id: this.id,
       username: this.username,
-      createAt: this.createdAt.getTime(),
+      createdAt: this.createdAt.getTime(),
       updatedAt: this.updatedAt.getTime(),
       permissions: this.permissions,
       preferredName: this.preferredName,
