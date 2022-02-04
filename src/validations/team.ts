@@ -4,3 +4,6 @@ export const teamSchema = Joi.object({
     .max(191)
     .required(),
 });
+export const teamEditSchema = Joi.object({
+  name: Joi.string().max(191),
+});
