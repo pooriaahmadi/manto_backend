@@ -9,6 +9,7 @@
         "node": "^16.6.1"
     },
     "scripts": {
+        "preinstall": "npm config set package-lock false",
         "build": "npm-run-all clean tsc",
         "clean": "rm -rf dist",
         "nodemon": "nodemon --watch dist",
