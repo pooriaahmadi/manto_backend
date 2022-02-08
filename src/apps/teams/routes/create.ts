@@ -9,6 +9,7 @@ const execute = async (request: Request, response: Response) => {
   const team = await Teams.create({
     name: request.body.name,
     user: request.user,
+    description: request.body.description,
   });
   return response.json(team.toJSON());
 };

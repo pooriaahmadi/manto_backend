@@ -6,10 +6,12 @@ class Team {
   name: string;
   user: User;
   avatar?: string;
-  constructor({ avatar, id, name, user }: TeamInputs) {
+  description?: string;
+  constructor({ avatar, id, name, user, description }: TeamInputs) {
     this.id = id;
     this.name = name;
     this.user = user;
+    this.description = description;
     this.avatar = avatar;
   }
   updateByValues = async (values: { [key: string]: any }): Promise<Team> => {
@@ -29,6 +31,7 @@ class Team {
       id: this.id,
       name: this.name,
       user: this.user.toJSON(),
+      description: this.description,
       avatar: this.avatar,
     };
   };

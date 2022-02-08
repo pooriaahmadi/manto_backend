@@ -52,9 +52,11 @@ export interface TeamInputs {
   name: string;
   avatar?: string;
   user: User;
+  description?: string;
 }
 export interface TeamCreateInputs {
   user: User;
   name: string;
+  description?: string;
   avatar?: string;
 }
