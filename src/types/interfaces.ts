@@ -2,6 +2,7 @@ import { method } from "./types";
 import { Request as ExpressRequest } from "express";
 import User from "../classes/User";
 import { FolderModes } from "./enums";
+import Team from "../classes/Team";
 
 export interface AppInputs {
   route?: string;
@@ -51,12 +52,22 @@ export interface TeamInputs {
   id: number;
   name: string;
   avatar?: string;
-  user: User;
   description?: string;
 }
 export interface TeamCreateInputs {
-  user: User;
   name: string;
   description?: string;
   avatar?: string;
+}
+export interface TeamMemberInputs {
+  id: number;
+  team: Team;
+  user: User;
+  permissions: number;
+}
+
+export interface TeamMembersCreate {
+  team: Team;
+  user: User;
+  permissions: number;
 }
