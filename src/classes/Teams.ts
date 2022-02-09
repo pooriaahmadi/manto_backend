@@ -7,9 +7,9 @@ import User from "./User";
 class Teams {
   static create = async ({ name, avatar, description }: TeamCreateInputs) => {
     const result: any = await Main.createQuery(
-      `INSERT INTO teams(name, description, avatar) VALUES ('${name}', '${description}', ${
-        avatar ? `'${avatar}'` : "NULL"
-      })`
+      `INSERT INTO teams(name, description, avatar) VALUES ('${name}', ${
+        description ? `'${description}'` : "NULL"
+      }, ${avatar ? `'${avatar}'` : "NULL"})`
     );
 
     return new Team({
