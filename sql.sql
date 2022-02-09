@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 08, 2022 at 08:46 PM
+-- Generation Time: Feb 09, 2022 at 09:15 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.15
 
@@ -30,9 +30,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `teams` (
   `id` int(11) NOT NULL,
   `name` varchar(191) NOT NULL,
-  `user` int(11) NOT NULL,
   `description` text DEFAULT NULL,
   `avatar` varchar(191) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `team_members`
+--
+
+CREATE TABLE `team_members` (
+  `id` int(11) NOT NULL,
+  `team` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  `permissions` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -67,6 +79,12 @@ ALTER TABLE `teams`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `team_members`
+--
+ALTER TABLE `team_members`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -85,6 +103,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `team_members`
+--
+ALTER TABLE `team_members`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
