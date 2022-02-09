@@ -7,7 +7,10 @@ import Teams from "../../../classes/Teams";
 const execute = async (request: Request, response: Response) => {
   const team = await Teams.getById(parseInt(request.params.id));
   if (!team) return response.status(404).json({ message: "Team not found" });
-  if (team.user.id !== request.user.id)
+  const teamMembers = (await team.getMembers()).filter(
+    (item) => item.user.id === request.user.id && item.permissions & 16
+  );
+  if (!teamMembers.length)
     return response
       .status(403)
       .json({ message: "User does not have access to the team" });
