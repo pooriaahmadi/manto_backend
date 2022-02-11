@@ -1,7 +1,7 @@
 import { method } from "./types";
 import { Request as ExpressRequest } from "express";
 import User from "../classes/User";
-import { FolderModes } from "./enums";
+import { CommentModes, FolderModes } from "./enums";
 import Team from "../classes/Team";
 
 export interface AppInputs {
@@ -70,4 +70,19 @@ export interface TeamMembersCreate {
   team: Team;
   user: User;
   permissions: number;
+}
+export interface CommentInputs {
+  id: number;
+  mode: number;
+  title?: string;
+  content: string;
+  user?: User;
+  team?: Team;
+}
+export interface CommentsCreateInputs {
+  mode: CommentModes;
+  title?: string;
+  content: string;
+  team?: Team;
+  user?: User;
 }
