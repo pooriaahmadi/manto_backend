@@ -8,13 +8,15 @@ class _Comment {
   mode: number;
   title?: string;
   content: string;
+  author: User;
   user?: User;
   team?: Team;
-  constructor({ id, mode, title, content, team, user }: CommentInputs) {
+  constructor({ id, mode, title, content, team, user, author }: CommentInputs) {
     this.id = id;
     this.mode = mode;
     this.title = title;
     this.content = content;
+    this.author = author;
     this.user = user;
     this.team = team;
   }
@@ -35,6 +37,7 @@ class _Comment {
       mode: this.mode,
       title: this.title,
       content: this.content,
+      author: this.author.toJSON(),
       user: this.user?.toJSON(),
       team: this.user?.toJSON(),
     };

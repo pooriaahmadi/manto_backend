@@ -76,6 +76,7 @@ export interface CommentInputs {
   mode: number;
   title?: string;
   content: string;
+  author: User;
   user?: User;
   team?: Team;
 }
@@ -83,6 +84,7 @@ export interface CommentsCreateInputs {
   mode: CommentModes;
   title?: string;
   content: string;
+  author: User;
   team?: Team;
   user?: User;
 }
