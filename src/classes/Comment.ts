@@ -39,7 +39,7 @@ class _Comment {
       content: this.content,
       author: this.author.toJSON(),
       user: this.user?.toJSON(),
-      team: this.user?.toJSON(),
+      team: this.team?.toJSON(),
     };
   };
 }

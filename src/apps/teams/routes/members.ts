@@ -1,7 +1,6 @@
 import AppRoute from "../../../classes/AppRoute";
 import { Response } from "express";
-import { Request } from "../../../types/interfaces";
-import AuthorizationToken from "../../../middlewares/AuthorizationToken";
+import { Request } from "express";
 import Teams from "../../../classes/Teams";
 
 const execute = async (request: Request, response: Response) => {
@@ -15,5 +14,4 @@ export default new AppRoute({
   execute: execute,
   method: "GET",
   customRoute: ":id/members",
-  middlewares: [AuthorizationToken],
 });
