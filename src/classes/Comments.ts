@@ -33,7 +33,7 @@ class Comments {
   };
   static getById = async (id: number): Promise<_Comment | undefined> => {
     let results = await Main.createQuery(
-      `SELECT comments.id as comments_id, comments.mode as comments_mode, comments.title as comments_title, comments.content as comments_content, users.id as users_id, users.username as users_username, users.email as users_email, users.permissions as users_permissions, users.salt as users_salt, users.hashed_password as users_hashed_password, users.token as users_token, users.verified as users_verified, users.verification_token as users_verification_token, users.preferred_name as users_preferred_name, users.created_at as users_created_at, users.updated_at as users_updated_at,users.id as author_id, users.username as author_username, users.email as author_email, users.permissions as author_permissions, users.salt as author_salt, users.hashed_password as author_hashed_password, users.token as author_token, users.verified as author_verified, users.verification_token as author_verification_token, users.preferred_name as author_preferred_name, users.created_at as author_created_at, users.updated_at as author_updated_at, teams.id as teams_id, teams.name as teams_name, teams.avatar as teams_avatar FROM comments LEFT JOIN teams on teams.id=comments.team LEFT JOIN users on users.id=comments.user LEFT JOIN users on users.id=comments.author WHERE comments.id=${id};`
+      `SELECT comments.id as comments_id, comments.mode as comments_mode, comments.title as comments_title, comments.content as comments_content, users.id as users_id, users.username as users_username, users.email as users_email, users.permissions as users_permissions, users.salt as users_salt, users.hashed_password as users_hashed_password, users.token as users_token, users.verified as users_verified, users.verification_token as users_verification_token, users.preferred_name as users_preferred_name, users.created_at as users_created_at, users.updated_at as users_updated_at, author.id as author_id, author.username as author_username, author.email as author_email, author.permissions as author_permissions, author.salt as author_salt, author.hashed_password as author_hashed_password, author.token as author_token, author.verified as author_verified, author.verification_token as author_verification_token, author.preferred_name as author_preferred_name, author.created_at as author_created_at, author.updated_at as author_updated_at, teams.id as teams_id, teams.name as teams_name, teams.avatar as teams_avatar FROM comments LEFT JOIN teams on teams.id=comments.team LEFT JOIN users on users.id=comments.user LEFT JOIN users author on author.id=comments.author WHERE comments.id=${id}`
     );
     if (!results.length) return;
     results = results[0];
@@ -44,7 +44,7 @@ class Comments {
       title: results.comments_title,
       author: new User({
         createdAt: results.author_created_at,
-        email: results.teams_email,
+        email: results.author_email,
         hashedPassword: results.author_hashed_password,
         id: results.author_id,
         permissions: results.author_permissions,
@@ -56,26 +56,30 @@ class Comments {
         preferredName: results.author_preferred_name,
         verificationToken: results.author_verification_token,
       }),
-      team: new Team({
-        avatar: results.teams_avatar,
-        id: results.teams_id,
-        name: results.teams_name,
-        description: results.teams_description,
-      }),
-      user: new User({
-        createdAt: results.users_created_at,
-        email: results.teams_email,
-        hashedPassword: results.users_hashed_password,
-        id: results.users_id,
-        permissions: results.users_permissions,
-        salt: results.users_salt,
-        token: results.users_token,
-        updatedAt: results.users_updated_at,
-        username: results.users_username,
-        verified: results.users_verified,
-        preferredName: results.users_preferred_name,
-        verificationToken: results.users_verification_token,
-      }),
+      team: results.teams_id
+        ? new Team({
+            avatar: results.teams_avatar,
+            id: results.teams_id,
+            name: results.teams_name,
+            description: results.teams_description,
+          })
+        : undefined,
+      user: results.users_id
+        ? new User({
+            createdAt: results.users_created_at,
+            email: results.users_email,
+            hashedPassword: results.users_hashed_password,
+            id: results.users_id,
+            permissions: results.users_permissions,
+            salt: results.users_salt,
+            token: results.users_token,
+            updatedAt: results.users_updated_at,
+            username: results.users_username,
+            verified: results.users_verified,
+            preferredName: results.users_preferred_name,
+            verificationToken: results.users_verification_token,
+          })
+        : undefined,
     });
   };
   static getByUser = async (user: User): Promise<_Comment[]> => {
@@ -83,8 +87,6 @@ class Comments {
       `SELECT comments.id as comments_id, comments.mode as comments_mode, comments.title as comments_title, comments.content as comments_content, users.email as author_email, users.permissions as author_permissions, users.salt as author_salt, users.hashed_password as author_hashed_password, users.token as author_token, users.verified as author_verified, users.verification_token as author_verification_token, users.preferred_name as author_preferred_name, users.created_at as author_created_at, users.updated_at as author_updated_at, users.id as author_id, users.username as author_username FROM comments LEFT JOIN users on users.id=comments.author WHERE comments.user=${user.id};`
     );
     return results.map((item: any) => {
-      console.log(item.author_username);
-
       return new _Comment({
         content: item.comments_content,
         id: item.comments_id,
