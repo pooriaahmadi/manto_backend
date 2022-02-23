@@ -21,7 +21,7 @@ class _Comment {
     this.team = team;
   }
   delete = async () => {
-    await Main.createQuery(`DELETE FROM comments where ${this.id}`);
+    await Main.createQuery(`DELETE FROM comments WHERE comments.id=${this.id}`);
   };
   updateByValues = async (values: { [key: string]: any }) => {
     await Main.createQuery(

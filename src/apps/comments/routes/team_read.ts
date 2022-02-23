@@ -12,7 +12,7 @@ const execute = async (request: Request, response: Response) => {
   members = members.filter(
     (item) => item.user.permissions & 16 && item.user.id === request.user.id
   );
-  if (!members.length || !(request.user.permissions & 16))
+  if (!members.length && !(request.user.permissions & 16))
     return response
       .status(403)
       .json({ message: "You don't have access to the comments" });
