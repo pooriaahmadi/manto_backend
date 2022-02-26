@@ -106,3 +106,7 @@ export interface PropertiesCreateInputs {
   type: number;
   category: Category;
 }
+export interface MatchInputs {
+  id: number;
+  team: Team;
+}
