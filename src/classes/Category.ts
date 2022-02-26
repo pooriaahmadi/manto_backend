@@ -19,7 +19,7 @@ class Category {
       })} WHERE ${this.id}`
     );
   };
-  to_json = () => {
+  toJSON = () => {
     return {
       id: this.id,
       title: this.title,

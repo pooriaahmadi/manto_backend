@@ -3,7 +3,7 @@ import { Request as ExpressRequest } from "express";
 import User from "../classes/User";
 import { CommentModes, FolderModes } from "./enums";
 import Team from "../classes/Team";
-
+import Category from "../classes/Category";
 export interface AppInputs {
   route?: string;
 }
@@ -94,4 +94,15 @@ export interface CategoryInputs {
 }
 export interface CategoriesCreateInputs {
   title: string;
+}
+export interface PropertyInputs {
+  id: number;
+  title: string;
+  type: number;
+  category: Category;
+}
+export interface PropertiesCreateInputs {
+  title: string;
+  type: number;
+  category: Category;
 }
