@@ -4,6 +4,8 @@ import User from "../classes/User";
 import { CommentModes, FolderModes } from "./enums";
 import Team from "../classes/Team";
 import Category from "../classes/Category";
+import Property from "../classes/Property";
+import Match from "../classes/Match";
 export interface AppInputs {
   route?: string;
 }
@@ -109,4 +111,15 @@ export interface PropertiesCreateInputs {
 export interface MatchInputs {
   id: number;
   team: Team;
+}
+export interface AnswerInputs {
+  id: number;
+  content: string;
+  property: Property;
+  match: Match;
+}
+export interface AnswersCreateInputs {
+  content: string;
+  property: Property;
+  match: Match;
 }
