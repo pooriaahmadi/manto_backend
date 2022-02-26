@@ -88,3 +88,10 @@ export interface CommentsCreateInputs {
   team?: Team;
   user?: User;
 }
+export interface CategoryInputs {
+  id: number;
+  title: string;
+}
+export interface CategoriesCreateInputs {
+  title: string;
+}
