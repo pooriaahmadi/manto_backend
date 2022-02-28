@@ -2,18 +2,16 @@ import AppRoute from "../../../classes/AppRoute";
 import { Request } from "../../../types/interfaces";
 import { Response } from "express";
 import Scouter from "../../../middlewares/Scouter";
-import Matches from "../../../classes/Matches";
+import Categories from "../../../classes/Categories";
 
 const execute = async (request: Request, response: Response) => {
-  const id = parseInt(request.params.id);
-  const match = await Matches.getById(id);
-  if (!match) return response.status(404).json({ message: "Match not found" });
-  return response.json(match.toJSON());
+  const categories = await Categories.all();
+  return response.json(categories.map((item) => item.toJSON()));
 };
 
 export default new AppRoute({
   execute: execute,
   method: "GET",
-  customRoute: ":id",
+  customRoute: "all",
   middlewares: [Scouter],
 });

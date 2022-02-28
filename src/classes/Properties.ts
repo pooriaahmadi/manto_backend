@@ -20,7 +20,7 @@ class Properties {
   };
   static getById = async (id: number): Promise<Property | undefined> => {
     let result: any = await Main.createQuery(
-      `SELECT properties.id as properties_id, properties.title as properties_title, properties.type as properties_type, categories.id as categories_id, categories.title as categories_title FROM properties INNER JOIN category on properties.category=category.id WHERE properties.id=${id}`
+      `SELECT properties.id as properties_id, properties.title as properties_title, properties.type as properties_type, categories.id as categories_id, categories.title as categories_title FROM properties INNER JOIN categories on properties.category=categories.id WHERE properties.id=${id}`
     );
     if (!result.length) return;
     result = result[0];
@@ -33,6 +33,23 @@ class Properties {
         title: result.categories_title,
       }),
     });
+  };
+  static all = async (): Promise<Property[]> => {
+    const results: any[] = await Main.createQuery(
+      `SELECT properties.id as properties_id, properties.title as properties_title, properties.type as properties_type, categories.id as categories_id, categories.title as categories_title FROM properties INNER JOIN categories on properties.category=categories.id`
+    );
+    return results.map(
+      (item) =>
+        new Property({
+          id: item.properties_id,
+          title: item.properties_title,
+          type: item.properties_type,
+          category: new Category({
+            id: item.categories_id,
+            title: item.categories_title,
+          }),
+        })
+    );
   };
 }
 

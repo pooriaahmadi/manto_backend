@@ -25,6 +25,18 @@ class Categories {
       title: data.title,
     });
   };
+  static all = async (): Promise<Category[]> => {
+    const results: { id: number; title: string }[] = await Main.createQuery(
+      `SELECT * FROM categories`
+    );
+    return results.map(
+      (item) =>
+        new Category({
+          id: item.id,
+          title: item.title,
+        })
+    );
+  };
 }
 
 export default Categories;
