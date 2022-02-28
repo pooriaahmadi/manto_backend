@@ -10,7 +10,7 @@ class Match {
     this.team = team;
   }
   delete = async () => {
-    await Main.createQuery(`DELETE FROM matches WHERE ${this.id}`);
+    await Main.createQuery(`DELETE FROM matches WHERE matches.id=${this.id}`);
   };
   updateByValues = async (values: { [key: string]: any }) => {
     await Main.createQuery(
@@ -23,7 +23,7 @@ class Match {
   toJSON = () => {
     return {
       id: this.id,
-      team: this.team,
+      team: this.team.toJSON(),
     };
   };
 }
