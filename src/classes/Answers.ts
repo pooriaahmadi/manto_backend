@@ -52,5 +52,69 @@ class Answers {
         })
     );
   };
+  static getById = async (id: number): Promise<Answer | undefined> => {
+    let result = await Main.createQuery(
+      `SELECT answers.id as answers_id, answers.content as answers_content, properties.id as properties_id, properties.title as properties_title, properties.type as properties_type, categories.id as categories_id, categories.title as categories_title, matches.id as matches_id, teams.id as teams_id, teams.name as teams_name, teams.description as teams_description, teams.avatar as teams_avatar FROM answers INNER JOIN properties on answers.property=properties.id INNER JOIN categories on properties.category=categories.id INNER JOIN matches on answers.match_id=matches.id INNER JOIN teams on matches.team=teams.id WHERE answers.id=${id}`
+    );
+    if (!result.length) return;
+    result = result[0];
+    return new Answer({
+      content: result.answers_content,
+      id: result.answers_id,
+      match: new Match({
+        id: result.matches_id,
+        team: new Team({
+          id: result.teams_id,
+          name: result.teams_name,
+          avatar: result.teams_avatar,
+          description: result.teams_description,
+        }),
+      }),
+      property: new Property({
+        id: result.properties_id,
+        title: result.properties_title,
+        type: result.properties_type,
+        category: new Category({
+          id: result.categories_id,
+          title: result.caeg,
+        }),
+      }),
+    });
+  };
+  static getByMatchAndProperty = async ({
+    matchId,
+    propertyId,
+  }: {
+    matchId: number;
+    propertyId: number;
+  }): Promise<Answer | undefined> => {
+    let result = await Main.createQuery(
+      `SELECT answers.id as answers_id, answers.content as answers_content, properties.id as properties_id, properties.title as properties_title, properties.type as properties_type, categories.id as categories_id, categories.title as categories_title, matches.id as matches_id, teams.id as teams_id, teams.name as teams_name, teams.description as teams_description, teams.avatar as teams_avatar FROM answers INNER JOIN properties on answers.property=properties.id INNER JOIN categories on properties.category=categories.id INNER JOIN matches on answers.match_id=matches.id INNER JOIN teams on matches.team=teams.id WHERE properties.id=${propertyId} and matches.id=${matchId}`
+    );
+    if (!result.length) return;
+    result = result[0];
+    return new Answer({
+      content: result.answers_content,
+      id: result.answers_id,
+      match: new Match({
+        id: result.matches_id,
+        team: new Team({
+          id: result.teams_id,
+          name: result.teams_name,
+          avatar: result.teams_avatar,
+          description: result.teams_description,
+        }),
+      }),
+      property: new Property({
+        id: result.properties_id,
+        title: result.properties_title,
+        type: result.properties_type,
+        category: new Category({
+          id: result.categories_id,
+          title: result.caeg,
+        }),
+      }),
+    });
+  };
 }
 export default Answers;

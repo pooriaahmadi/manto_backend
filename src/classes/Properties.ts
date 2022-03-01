@@ -34,6 +34,23 @@ class Properties {
       }),
     });
   };
+  static getByCategory = async (id: number): Promise<Property[]> => {
+    const results: any[] = await Main.createQuery(
+      `SELECT properties.id as properties_id, properties.title as properties_title, properties.type as properties_type, categories.id as categories_id, categories.title as categories_title FROM properties INNER JOIN categories on properties.category=categories.id WHERE categories.id=${id}`
+    );
+    return results.map(
+      (item) =>
+        new Property({
+          id: item.properties_id,
+          title: item.properties_title,
+          type: item.properties_type,
+          category: new Category({
+            id: item.categories_id,
+            title: item.categories_title,
+          }),
+        })
+    );
+  };
   static all = async (): Promise<Property[]> => {
     const results: any[] = await Main.createQuery(
       `SELECT properties.id as properties_id, properties.title as properties_title, properties.type as properties_type, categories.id as categories_id, categories.title as categories_title FROM properties INNER JOIN categories on properties.category=categories.id`

@@ -15,14 +15,14 @@ class Answer {
     this.match = match;
   }
   delete = async () => {
-    await Main.createQuery(`DELETE FROM answers WHERE ${this.id}`);
+    await Main.createQuery(`DELETE FROM answers WHERE answers.id=${this.id}`);
   };
   updateByValues = async (values: { [key: string]: any }) => {
     await Main.createQuery(
       `${Main.resolveUpdateValues({
         values: values,
         table: "answers",
-      })} WHERE ${this.id}`
+      })} WHERE answers.id=${this.id}`
     );
   };
   toJSON = () => {

@@ -1,7 +1,6 @@
 import AppRoute from "../../../classes/AppRoute";
 import { Request } from "../../../types/interfaces";
 import { Response } from "express";
-import Scouter from "../../../middlewares/Scouter";
 import Properties from "../../../classes/Properties";
 const execute = async (request: Request, response: Response) => {
   const properties = await Properties.all();
@@ -12,5 +11,4 @@ export default new AppRoute({
   execute: execute,
   method: "GET",
   customRoute: "all",
-  middlewares: [Scouter],
 });
